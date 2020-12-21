@@ -12,12 +12,13 @@ RUN make e2e-build
 
 FROM gcr.io/k8s-testimages/kubekins-e2e:v20200311-1e25827-master
 
-# RUN echo "DOCKER_OPTS=\"\${DOCKER_OPTS} --registry-mirror=\"https://registry-mirror.pingcap.net\"\"" | \
-#     tee --append /etc/default/docker
+RUN echo "DOCKER_OPTS=\"\${DOCKER_OPTS} --registry-mirror=\"https://registry-mirror.pingcap.net\"\"" | \
+    tee --append /etc/default/docker
 
 RUN mkdir -p /usr/local/bin/chaos-mesh-e2e
 COPY --from=go_build /chaos-mesh/output/bin/ /usr/local/bin/chaos-mesh-e2e
 COPY --from=go_build /root/.cache/go-build /root/.cache/go-build
 RUN rm -rf /go
 COPY --from=go_build /go /go_build
+COPY docker-cache.tar.gz /docker-cache.tar.gz
 COPY update-cache.sh /update-cache.sh
