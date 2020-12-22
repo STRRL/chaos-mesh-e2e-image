@@ -31,6 +31,7 @@ if [ "$IN_DOCKER" == "1" ]; then
 
     make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image
     make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-e2e-helper
+    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-chaos-mesh-e2e
 
     rm -rf /chaos-mesh
 else
