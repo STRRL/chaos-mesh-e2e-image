@@ -18,16 +18,22 @@
 # This is optional. We only use it in CI to speed up our e2e process.
 #
 
+set -e
+
 if [ "$IN_DOCKER" == "1" ]; then
+    export IN_DOCKER=0
+
     DOCKER_CLI_EXPERIMENTAL=enabled docker buildx create --use --name chaos-mesh-builder
 
     cd /
     git clone https://github.com/YangKeao/chaos-mesh.git --depth=1 --single-branch -b update-e2e-base-image
     cd chaos-mesh
-    make DOCKER_CACHE=1 CACHE_DIR=/mnt DISABLE_CACHE_FROM=1 image
+
+    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image
+    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-e2e-helper
+
     rm -rf /chaos-mesh
 else
-    rm docker-cache.tar.gz
-    docker run --mount type=bind,source=$(pwd)/docker-cache,target=/mnt --privileged --env IN_DOCKER=1 --env DOCKER_IN_DOCKER_ENABLED="true" --rm -it --entrypoint runner.sh hub.pingcap.net/yangkeao/chaos-mesh-e2e-base /update-cache.sh
-    tar -czvf docker-cache.tar.gz docker-cache
+    docker run --volume $(pwd)/cache:/mnt --privileged --env IN_DOCKER=1 --env DOCKER_IN_DOCKER_ENABLED="true" --rm -it --entrypoint runner.sh hub.pingcap.net/yangkeao/chaos-mesh-e2e-base /update-cache.sh
+    sudo tar -czvf cache.tar.gz cache
 fi

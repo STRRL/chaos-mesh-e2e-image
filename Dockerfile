@@ -20,5 +20,5 @@ COPY --from=go_build /chaos-mesh/output/bin/ /usr/local/bin/chaos-mesh-e2e
 COPY --from=go_build /root/.cache/go-build /root/.cache/go-build
 RUN rm -rf /go
 COPY --from=go_build /go /go_build
-COPY docker-cache.tar.gz /docker-cache.tar.gz
+COPY cache.tar.gz /cache.tar.gz
 COPY update-cache.sh /update-cache.sh
