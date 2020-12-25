@@ -23,15 +23,15 @@ set -e
 if [ "$IN_DOCKER" == "1" ]; then
     export IN_DOCKER=0
 
-    DOCKER_CLI_EXPERIMENTAL=enabled docker buildx create --use --name chaos-mesh-builder
-
     cd /
     git clone https://github.com/YangKeao/chaos-mesh.git --depth=1 --single-branch -b update-e2e-base-image
     cd chaos-mesh
 
-    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image
-    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-e2e-helper
-    make DOCKER_CACHE=1 CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-chaos-mesh-e2e
+    DOCKER_CLI_EXPERIMENTAL=enabled docker buildx create --use --name chaos-mesh-builder --config ./ci/builder.toml
+
+    make DOCKER_CACHE=1 DOCKER_CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image
+    make DOCKER_CACHE=1 DOCKER_CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-e2e-helper
+    make DOCKER_CACHE=1 DOCKER_CACHE_DIR=/mnt GO_BUILD_CACHE=/mnt DISABLE_CACHE_FROM=1 image-chaos-mesh-e2e
 
     rm -rf /chaos-mesh
 else
