@@ -24,7 +24,7 @@ if [ "$IN_DOCKER" == "1" ]; then
     export IN_DOCKER=0
 
     cd /
-    git clone https://github.com/YangKeao/chaos-mesh.git --depth=1 --single-branch -b update-e2e-base-image
+    git clone https://github.com/chaos-mesh/chaos-mesh.git --depth=1 --single-branch
     cd chaos-mesh
 
     DOCKER_CLI_EXPERIMENTAL=enabled docker buildx create --use --name chaos-mesh-builder --config ./ci/builder.toml

@@ -1,7 +1,7 @@
 FROM golang:1.15.6-buster as go_build
 
 WORKDIR /
-RUN git clone https://github.com/YangKeao/chaos-mesh.git --depth=1 -b update-e2e-base-image
+RUN git clone https://github.com/chaos-mesh/chaos-mesh.git --depth=1
 WORKDIR /chaos-mesh
 
 ARG http_proxy
