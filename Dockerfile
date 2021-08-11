@@ -9,7 +9,7 @@ ARG https_proxy
 
 RUN make ensure-all
 
-FROM gcr.io/k8s-testimages/kubekins-e2e:v20200311-1e25827-master
+FROM gcr.io/k8s-testimages/kubekins-e2e:latest-1.21
 
 RUN echo "DOCKER_OPTS=\"\${DOCKER_OPTS} --registry-mirror=\"https://registry-mirror.pingcap.net\"\"" | \
     tee --append /etc/default/docker
