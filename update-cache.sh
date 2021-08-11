@@ -35,6 +35,6 @@ if [ "$IN_DOCKER" == "1" ]; then
 
     rm -rf /chaos-mesh
 else
-    docker run --volume $(pwd)/cache:/mnt --privileged --env IN_DOCKER=1 --env DOCKER_IN_DOCKER_ENABLED="true" --rm -it --entrypoint runner.sh hub.pingcap.net/yangkeao/chaos-mesh-e2e-base /update-cache.sh
+    docker run --volume $(pwd)/cache:/mnt --privileged --env IN_DOCKER=1 --env DOCKER_IN_DOCKER_ENABLED="true" --rm -it --entrypoint runner.sh hub.pingcap.net/chaos-mesh/chaos-mesh-e2e-base /update-cache.sh
     sudo tar -czvf cache.tar.gz cache
 fi

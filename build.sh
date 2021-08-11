@@ -18,4 +18,4 @@
 # This is optional. We only use it in CI to speed up our e2e process.
 #
 
-docker build . -t hub.pingcap.net/yangkeao/chaos-mesh-e2e-base
+docker build . -t hub.pingcap.net/chaos-mesh/chaos-mesh-e2e-base

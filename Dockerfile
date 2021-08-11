@@ -1,4 +1,4 @@
-FROM golang:1.15.6-buster as go_build
+FROM golang:1.16.7-buster as go_build
 
 WORKDIR /
 RUN git clone https://github.com/chaos-mesh/chaos-mesh.git --depth=1
